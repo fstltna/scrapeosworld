@@ -203,7 +203,7 @@ foreach (@{ $decoded_json })
 
 print $fh "</table>
 <hr>
-Version $REVVER<br>Get This Utility At <a href=\"https://lugdunoncity.org/index.php/downloads-new/category/13-server\">Opensim City</a>
+Version $REVVER<br>Get This Utility At <a href=\"https://opensimcity.org/index.php/downloads/category/34-server-utils\">Opensim City</a>
 </body>
 </html>";
 close $fh;
