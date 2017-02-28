@@ -1,13 +1,14 @@
 #!/usr/bin/perl
 
-# Creates a static HTML file from the http:opensimworld.com service
+# Creates a static HTML file from the http://opensimworld.com service
 #
 # Change These Settings:
 $SERVER_NAME="OpensimCity";	# The name of your server
-$GAMELINK="http://opensimworld.com/regionstats?is_ajax=1&ids=77797,77757,77759,77936,77788,77926,76006,77745,77789,77758,77782"; # Where to pull JSON data from
 $OUTDIR="/var/www/html/regionstats";	# The file path to your web root
 $WEBDIR="/regionstats/";		# The absolute web directory of the above
-$SERVER_ADDR="http://opensimworld.com/regionstats?is_ajax=1&ids=77797,77757,77759,77936,77788,77926,76006,77745,77789,77758,77782"; # Where to pull JSON data from
+
+# Where to pull JSON data from. Put the region IDs at the end seperated by a comma
+$SERVER_ADDR="http://opensimworld.com/regionstats?is_ajax=1&ids=77797,77757,77759,77936,77788,77926,76006,77745,77789,77758,77782"; 
 
 # Probobly don't change below here
 $REVVER="1.0.0";
@@ -19,7 +20,6 @@ use Data::Dumper qw(Dumper);
 use LWP::Simple;
 use JSON qw( decode_json );
 use String::Scanf;
-#use REST::Client;
 
 # Code below here
 if (-e $OUTDIR and -d $OUTDIR)
@@ -34,8 +34,6 @@ else
 
 ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
 $year = substr($year, 1);
-#printf("Time Format - HH:MM:SS\n");
-#$LAST_SEEN = sprintf("%02d/%02d/20%02d %02d:%02d:%02d", $mon, $mday, $year, $hour, $min, $sec); # ZZZ
 $LAST_SEEN = localtime();
 
 # Write out HTML
@@ -61,7 +59,7 @@ body {
 <body>
 <center>Last Scanned:<br>$LAST_SEEN</center>
 <table border=1>
-<tr><td><center><h1>$SERVER_NAME<br>Server Stats</h1></center></td></tr>
+<tr><td><center><h1>$SERVER_NAME<br>Region Stats</h1></center></td></tr>
 END_MESSAGE
 
 # Pull in server data
@@ -71,10 +69,8 @@ if ($response->{success})
     my $html = $response->{content};
     @LINES = split /\n/, $html;
     chomp(@LINES);
-    #print("Lines: '@LINES'\n");
     #($a, $b) = sscanf("'{\"players\":%s", @LINES);
     $decoded_json = decode_json($html);
-    #print Dumper $decoded_json;
 }
 else
 {
@@ -83,7 +79,6 @@ else
 
 open(my $fh, '>', "index.html") or die "Could not open file 'index.html' $!";
 print $fh $message;
-#foreach (@{ $decoded_json->{players} })
 foreach (@{ $decoded_json })
 {
     # Blank All These Out
@@ -132,7 +127,7 @@ foreach (@{ $decoded_json })
     else
     {
 	# Use this hosted image
-	$image_url = "https://OpensimCity.org/regionstats/NoScreenShot.jpg";
+	$image_url = "https://OpensimCity.org/regionstats/ScreenNeeded.png";
     }
     #print "Image URL: $image_url\n";
     if ($_->{status} ne "")

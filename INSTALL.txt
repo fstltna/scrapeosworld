@@ -1,0 +1,31 @@
+This is a util to pull JSON data from the opensimworld.com
+website and create a static HTML file with the stats for
+the desired regions.
+
+Required Perl extensions:
+=========================
+File::Copy
+HTTP::Tiny
+Data::Dumper
+LWP::Simple
+JSON
+String::Scanf
+
+Its intended to be used with a iframe, which will be described
+below.
+
+You should run this from a cron job every 5 minutes using a
+line such as this:
+--
+15 7 * * * /usr/bin/perl /root/scrapeosworld/scrapeworld.pl
+    Replace "/root/scrapeosworld" with wherever you wish to
+run it from.
+--
+
+1) Edit the sample-iframe file to point to where you have it
+going, by default "/regionstats"
+
+2) Copy the sample-iframe file into a module on your website,
+or directly add the link in your index.html. If you are using
+index.php, you will have to do it yourself.
+
