@@ -17,7 +17,7 @@ below.
 You should run this from a cron job every 5 minutes using a
 line such as this:
 --
-15 7 * * * /usr/bin/perl /root/scrapeosworld/scrapeworld.pl
+*/5 * * * * /usr/bin/perl /root/scrapeosworld/scrapeworld.pl
     Replace "/root/scrapeosworld" with wherever you wish to
 run it from.
 --
