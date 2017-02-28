@@ -161,7 +161,7 @@ foreach (@{ $decoded_json })
 	}
 	if ($rating eq "Moderate")
 	{
-	    $rating = "<font style=\"color:#FFFF00;\">General</font>";
+	    $rating = "<font style=\"color:#FFFF00;\">Moderate</font>";
 	}
     }
     else
